@@ -168,7 +168,7 @@ body {
 }
 
 /* Larger binary clock on mobile devices */
-@media (pointer: coarse) {
+@media screen and (max-width: 600px) {
   .binary-grid {
     --dot: 48px;
     --gap: 28px;

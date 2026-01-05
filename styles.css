@@ -155,11 +155,11 @@ body {
   align-items: center;
 }
 
-/* MOBILE: make binary dots larger */
-@media screen and (max-width: 600px) {
+/* Larger binary clock on mobile devices */
+@media (pointer: coarse) {
   .binary-grid {
-    --dot: clamp(20px, 6vmin, 36px);
-    --gap: calc(var(--dot) * 0.8);
+    --dot: 48px;
+    --gap: 28px;
     padding: var(--gap);
   }
 }

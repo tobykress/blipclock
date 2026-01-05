@@ -149,7 +149,20 @@ body {
 .hand.micro  { height: 110px; background: #0074D9; }
 
 /* Center the binary clock */
-#clock-binary { display: grid; place-items: center; }
+#clock-binary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* MOBILE: make binary dots larger */
+@media screen and (max-width: 600px) {
+  .binary-grid {
+    --dot: clamp(20px, 6vmin, 36px);
+    --gap: calc(var(--dot) * 0.8);
+    padding: var(--gap);
+  }
+}
 
 /* Responsive sizing */
 .binary-grid {

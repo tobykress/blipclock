@@ -166,7 +166,7 @@ body {
 
 /* Responsive sizing */
 .binary-grid {
-  --dot: clamp(14px, 3.2vmin, 28px);
+  --dot: clamp(18px, 6vmin, 32px);
   --gap: calc(var(--dot) * 0.6);
   display: flex;
   flex-direction: column;

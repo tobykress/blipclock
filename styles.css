@@ -1,0 +1,242 @@
+@font-face {
+  font-family: 'Digital7';
+  src: url('./fonts/digital-7.ttf') format('truetype');
+}
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #dffff0;
+  font-family: 'Share Tech Mono', monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+}
+
+.clock-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
+.blip-time {
+  font-family: 'Orbitron', 'Share Tech Mono', monospace;   /* or Orbitron if you switch later */
+  /* If the font supports it, this helps; otherwise our .digit width handles it */
+  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  gap: 0.2ch;            /* spacing between digits */
+  letter-spacing: 0;     /* handled by gap now */
+  color: #000;
+  font-size: 4rem;
+}
+
+/* Each digit occupies exactly one "0" width */
+.blip-time .digit {
+  display: inline-block;
+  width: 1ch;            /* 1ch = width of the '0' glyph */
+  text-align: center;    /* center the glyph inside its slot */
+}
+
+/* Navigation Buttons */
+.nav-button {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  background-color: #dffff0;
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+}
+
+.top-left {
+  top: 20px;
+  left: 20px;
+}
+
+.top-right {
+  top: 20px;
+  right: 20px;
+}
+
+.bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+
+.bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+
+.nav-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: grayscale(none) opacity(0.6);
+  transition: filter 0.2s ease;
+}
+
+.nav-button.active img {
+  filter: grayscale(0) opacity(1);
+}
+
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Analog face sizing */
+#clock-analog .analog-face {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: auto;
+  border: 4px solid #000;
+  border-radius: 50%;
+  background: #dffff0;
+}
+
+/* Layer order so hands sit above numbers */
+#clock-analog .analog-numbers { position: absolute; inset: 0; z-index: 1; }
+#clock-analog .hand          { position: absolute; z-index: 2; }
+#clock-analog .center-dot    { position: absolute; z-index: 3; }
+
+/* Place digits around the circle (10 divisions = 36° each) */
+/* Place digits around the circle (10 divisions = 36° each) */
+#clock-analog .analog-numbers .number {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 1.2rem;
+  transform:
+    translate(-50%, -50%)                    /* center the number box first */
+    rotate(calc(var(--n) * 36deg))           /* spin to the tick */
+    translateY(calc(-1 * var(--radius, 130px))) /* push out to the ring */
+    rotate(calc(var(--n) * -36deg));         /* keep text upright */
+  transform-origin: center;
+  font-family: 'Orbitron', 'Share Tech Mono', monospace;
+}
+#clock-analog .analog-face { --radius: 130px; } /* try 128–136px to fine-tune */
+
+
+/* Hands (keep your colors/lengths if you already set them) */
+.hand {
+  width: 2px;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+  transform: rotate(0deg);
+}
+.hand.hour   { height: 50px;  background: #000; }
+.hand.minute { height: 70px;  background: #f39c12; }
+.hand.second { height: 90px;  background: #e74c3c; }
+.hand.milli  { height: 100px; background: #8e44ad; }
+.hand.micro  { height: 110px; background: #0074D9; }
+
+/* Center the binary clock */
+#clock-binary { display: grid; place-items: center; }
+
+/* Responsive sizing */
+.binary-grid {
+  --dot: clamp(14px, 3.2vmin, 28px);
+  --gap: calc(var(--dot) * 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap);
+  padding: var(--gap);
+}
+
+.row { display: flex; gap: var(--gap); }
+
+.bit {
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid #555;            /* darker so it's visible on white */
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.03);
+  transition: background-color .18s ease, border-color .18s ease, transform .12s ease;
+}
+.bit.on { transform: translateY(-1px); }
+
+#rowDb .bit.on { background:#000;    border-color:#000; }
+#rowB  .bit.on { background:#f39c12; border-color:#f39c12; }
+#rowCb .bit.on { background:#e74c3c; border-color:#e74c3c; }
+#rowMb .bit.on { background:#8e44ad; border-color:#8e44ad; }
+#rowUb .bit.on { background:#0074D9; border-color:#0074D9; }
+
+.about-inner ul {
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.about-inner li {
+  margin-bottom: 0.5rem;
+}
+
+
+.about-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000;
+}
+
+/* ABOUT BUTTON — TOP CENTER */
+.top-center {
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* FULLSCREEN ABOUT PAGE */
+.about-page {
+  position: absolute;
+  inset: 0;
+  background-color: #dffff0;
+  padding: 60px 20px 40px;
+  overflow-y: auto;
+  z-index: 10;
+  font-family: 'Share Tech Mono', monospace;
+  display: flex;
+  justify-content: center;
+}
+
+.about-inner {
+  max-width: 720px;
+  width: 100%;
+  line-height: 1.6;
+  padding-bottom: 500px;
+}
+
+/* About close button */
+.about-page .about-close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000;
+}

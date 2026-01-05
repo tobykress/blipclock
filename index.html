@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blip Clock</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- DIGITAL CLOCK -->
+  <div class="clock-container" id="clock-digital">
+    <div class="blip-time" id="blipTime">00000</div>
+  </div>
+
+  <!-- ANALOG CLOCK -->
+  <div class="clock-container hidden" id="clock-analog">
+    <div class="analog-face">
+      <div class="hand micro" id="handMicro"></div>
+      <div class="hand milli" id="handMilli"></div>
+      <div class="hand second" id="handCenti"></div>
+      <div class="hand minute" id="handBlip"></div>
+      <div class="hand hour" id="handDeci"></div>
+      <div class="center-dot"></div>
+      <div class="analog-numbers">
+        <script>
+          for (let i = 0; i < 10; i++) {
+            document.write(`<div class="number" style="--n:${i}">${i}</div>`);
+          }
+        </script>
+      </div>
+    </div>
+  </div>
+
+  <!-- BINARY CLOCK -->
+  <div class="clock-container hidden" id="clock-binary">
+    <div class="binary-grid">
+      <div class="row" id="rowDb"></div>
+      <div class="row" id="rowB"></div>
+      <div class="row" id="rowCb"></div>
+      <div class="row" id="rowMb"></div>
+      <div class="row" id="rowUb"></div>
+    </div>
+  </div>
+
+  <!-- SAND CLOCK -->
+  <div class="clock-container hidden" id="clock-sand">
+    <canvas id="sandCanvas" width="600" height="600"></canvas>
+  </div>
+
+<!-- NAVIGATION BUTTONS -->
+<div class="nav-button top-left active" onclick="switchMode('digital')" aria-label="Digital">
+  <img src="assets/icons/nav_digital.png" alt="Digital" />
+</div>
+
+<div class="nav-button top-right" onclick="switchMode('analog')" aria-label="Analog">
+  <img src="assets/icons/nav_analog.png" alt="Analog" />
+</div>
+
+<div class="nav-button bottom-left" onclick="switchMode('sand')" aria-label="Sand">
+  <img src="assets/icons/nav_sand.png" alt="Sand" />
+</div>
+
+<div class="nav-button bottom-right" onclick="switchMode('binary')" aria-label="Binary">
+  <img src="assets/icons/nav_binary.png" alt="Binary" />
+</div>
+
+  <script defer src="./script.js"></script>
+
+<!-- ABOUT BUTTON -->
+<div class="nav-button top-center" onclick="toggleAbout()" aria-label="About">
+  <img src="assets/icons/nav_about.png" alt="About" />
+</div>
+<!-- ABOUT SECTION (FULLSCREEN) -->
+<div id="aboutPage" class="about-page hidden">
+  <button class="about-close" onclick="toggleAbout()">✕</button>
+  <div class="about-inner">
+    <h2>About Decimal Time</h2>
+    <p>A decade ago I noticed a rather obvious but, to me, fascinating oversight: of all our big civilisational counting systems, time is the last hold out against decimalisation.  </p>
+
+  <p>Who today can remember the oddity of old money? Was it 20 shillings to a pound and 12 pence to a shilling, or the other way round? And while we still occasionally need to translate ounces into grams, the Avoirdupois system of weights is fighting a losing battle (at least outside the US). Even length outgrew the era of body part units like thumbs and feet.</p>
+
+  <p>One interesting note: many of those old systems loved the neat divisibility of the number twelve and its many factors. Ounce literally translates to 'a twelfth'; 12 inches in a foot; twelve pennies in a shilling (of course you knew that); 12 eggs in a dozen. And this is never more evident than in time: 12 months in a year, 24 hours in a day, 60 minutes in an hour, 60 seconds in a minute. All multiples of twelve. But twelve has had its time and that time is up. There must be a better way. </p>
+  
+  <p>It’s time - at last - for the fourth dimension to catch up with the other three and go decimal.</p>
+
+  <p>A cursory glance online revealed I was not the first to have this thought. In fact those clever French revolutionaries set about creating a decimal time system as early as 1793, along with the (some would argue more successful) metric systems for distance and weight. They not only divided the day into decimal time but took on the annual calendar too - attempting to clean up the mess left by Roman emperors co-opting extra days into months named after them, leaving us with a bumpy mix where children count the hills and valleys of their knuckles to remember the random lengths of the months we live by. But even the new French system of 30 days per month and 10 days per week left over 5 days (or 6 on a leap year), which for me never had the neatness needed to make the change worth the effort.</p>
+
+  <p>Decimal time, on the other hand, surely made sense. The French system divided the day into 10 decimal hours; each “hour” into 100 decimal minutes; and each “minute” into 100 decimal seconds - giving us 100,000 decimal seconds a day.</p>
+
+  <p>To my mind the big failing here is that it’s a slave to the old naming convention. Why bring hours, minutes and seconds into the new world when their very familiarity is sure to hold us back by mentally anchoring us to the past system?</p>
+
+  <p>My second quibble: refusing to jettison those three familiar units means we jump from 10 sub-units to 100 sub-units in the very next step. To me this messiness negates the whole purpose. I mean, are we moving to a base-10 decimal system or not, people?! Is it any wonder decimal time failed where metres and grams succeeded?</p>
+
+  <p>The second major attempt you’ll read about online is Swatch Internet Time or .beat time. Introduced in 1998, Swatch divided a day into 1,000 equal parts called .beats, each lasting 86.4 seconds. In the plus column: the name - clean and clear, new but intuitive, both geeky and cool. I also appreciate the attempt at a true break from the past, and in fact they went as far as doing away with time zones so it would be the same .beat everywhere. So, why didn’t it catch on?</p>
+
+  <p>My take is this: the single unit (just .beat?), the flattening of global time zones, and the fact that this was, after all, a corporate marketing campaign, all added up to a rather cold and calculated feel. But isn’t that what decimal systems are, I hear you say? Well yes, but time - as anyone who has straddled the Prime Meridian will agree - has a certain romance and poetry we don’t want thrown out with the bathwater. We need to retain some art to complement the science.</p>
+
+  <p>Which brings me to this latest attempt. So, what was I thinking when plotting my system?</p>
+
+  <p>The obvious place to start, of course, is the day. The time it takes for the world to spin once cannot, surely, be superseded by my new time system. That would be a step too far. The question is how to divide that day up. My system (developed before my research) is a close cousin of the French revolutionary one, while avoiding the mistakes they made.</p>
+
+  <p>Firstly, I believe they ended up in the right place with a unit of time that is one 100,000th of a day - what they called a “decimal second,” equal to 0.864 of an old second. That feels like a useful unit and works well on a human level for measuring small things. Where my system differs is in the steps in between. Rather than just having a new “hour,” I divided the day into five levels, each a division by 10 of the level before:</p>
+
+<ul>
+  <li>1 day (86,400 old seconds)</li>
+  <li>1/10 day = Deciblip (8,640 s)</li>
+  <li>1/100 day = Blip (864 s)</li>
+  <li>1/1,000 day = Centiblip (86.4 s — neatly, also one .beat)</li>
+  <li>1/10,000 day = Milliblip (8.64 s)</li>
+  <li>1/100,000 day = Microblip (0.864 s)</li>
+</ul>
+
+  <p>The next question - and another departure from the French - was a new naming system for the new units of time. While I really do like .beat, that was taken. I tried out options from the playful Tock to the science-y Chronon before landing on Blip - and then used familiar metric prefixes to build out the levels until we end up with the ladder above.</p>
+
+  <p>My first attempt to build a clock was, ironically, analogue. As an MVP I found a 24-hour wall clock with an hour hand that ran the full 360 degrees once a day. By removing the other hands and adding a new face I had an approximation of what I wanted. More importantly I had a Christmas present for my in-laws, who kindly hung the “timepiece” in their kitchen where it still resides today (long since run out of batteries to represent another post-time system, not that anyone seems to have noticed).</p>
+
+  <p>This new digital attempt, more than a decade after the first, is an excuse to play around with vibe-coding. I briefly tried to learn Java back in the day to bring my vision to life but soon gave up. Thanks to the magic of AI it’s finally time to share my musings with the world - and by “world” I mean the handful of family and friends who have kindly invested the last 10 minutes to click the link I sent and read this far. Enjoy. I have.</p>
+  <h3>Clock Views</h3>
+
+<p><strong>Digital:</strong> A 5-digit readout showing the current blip count from 00000 to 99999 so you can quickly see what time it is.</p>
+
+<p><strong>Analog:</strong> A traditional clock face divided into ten, with five hands marking each level of the blip system - from deciblip (the shortest hand) down to microblip (the longest hand).</p>
+
+<p><strong>Binary:</strong> A grid of coloured dots representing each digit of the time in binary. Admittedly a geeky visualisation rather than a useful one!</p>
+
+<p><strong>Sand:</strong> A pixel-falling hourglass, one grain of sand falls every microblip.
+  <p>&nbsp;</p>
+<p>&nbsp;</p>
+  </div>
+</div>
+
+<!-- ABOUT BUTTON (TOP CENTER) -->
+<div class="nav-button top-center" onclick="toggleAbout()" aria-label="About">
+  <img src="assets/icons/nav_about.png" alt="About" />
+</div>
+
+</body>
+</html>

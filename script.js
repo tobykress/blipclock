@@ -128,6 +128,7 @@ function initSand() {
   const totalGrains = cols * rows;
   const targetGrains = Math.floor(totalGrains * dayProgress);
 
+  requestAnimationFrame(() => {
   // Immediately fill base stack
   for (let i = 0; i < targetGrains; i++) {
     const col = i % cols;
@@ -136,6 +137,8 @@ function initSand() {
 
   sandReady = true;
   requestAnimationFrame(animateSandClock);
+});
+
 }
 
 

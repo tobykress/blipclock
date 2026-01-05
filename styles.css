@@ -155,14 +155,6 @@ body {
   align-items: center;
 }
 
-/* Larger binary clock on mobile devices */
-@media (pointer: coarse) {
-  .binary-grid {
-    --dot: 48px;
-    --gap: 28px;
-    padding: var(--gap);
-  }
-}
 
 /* Responsive sizing */
 .binary-grid {
@@ -173,6 +165,15 @@ body {
   align-items: center;
   gap: var(--gap);
   padding: var(--gap);
+}
+
+/* Larger binary clock on mobile devices */
+@media (pointer: coarse) {
+  .binary-grid {
+    --dot: 48px;
+    --gap: 28px;
+    padding: var(--gap);
+  }
 }
 
 .row { display: flex; gap: var(--gap); }

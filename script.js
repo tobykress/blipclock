@@ -116,25 +116,22 @@ function initSand() {
   grainSize = cw / cols;
   rows = Math.floor(ch / grainSize);
 
+  // Reset
   stackHeight = Array(cols).fill(0);
+  fallingGrains = [];
 
-  // Fill target = % of day
+  // Calculate current total grain target
   const now = new Date();
-  const msSinceMidnight = now - new Date(now).setHours(0, 0, 0, 0);
+  const msSinceMidnight = now - new Date(now).setHours(0,0,0,0);
   const dayProgress = msSinceMidnight / 86400000;
 
   const totalGrains = cols * rows;
   const targetGrains = Math.floor(totalGrains * dayProgress);
 
-  // Build an ordered queue of grains (left to right, bottom to top)
-  fallingGrains = [];
+  // Immediately fill base stack
   for (let i = 0; i < targetGrains; i++) {
     const col = i % cols;
-    const row = Math.floor(i / cols);
-    const x = col;
-    const targetY = ch - (row + 1) * grainSize;
-
-    fallingGrains.push({ x, y: 0, targetY });
+    stackHeight[col]++;
   }
 
   sandReady = true;
@@ -153,7 +150,7 @@ function animateSandClock() {
   sandCtx.clearRect(0, 0, cw, ch);
   sandCtx.fillStyle = '#008080';
 
-  // Draw settled stack
+  // Draw base sand
   for (let x = 0; x < cols; x++) {
     const h = stackHeight[x];
     if (h > 0) {
@@ -161,10 +158,32 @@ function animateSandClock() {
     }
   }
 
+  // New grains over time
+  const now = new Date();
+const msSinceMidnight = now - new Date(now).setHours(0, 0, 0, 0);
+const totalGrains = cols * rows;
+const currentTarget = Math.floor(totalGrains * (msSinceMidnight / 86400000));
+const currentBase = stackHeight.reduce((sum, h) => sum + h, 0);
+
+// Drop exactly enough grains to match real-time progress
+const grainsToAdd = currentTarget - currentBase;
+const maxPerFrame = 2;
+
+for (let i = 0; i < Math.min(grainsToAdd, maxPerFrame); i++) {
+  const nextIndex = currentBase + i;
+  const col = nextIndex % cols;
+  fallingGrains.push({
+    x: col,
+    y: ch - stackHeight[col] * grainSize - grainSize,
+    targetY: ch - (stackHeight[col] + 1) * grainSize
+  });
+}
+
+
   // Animate falling grains
   for (let i = fallingGrains.length - 1; i >= 0; i--) {
     const g = fallingGrains[i];
-    g.y += grainSize * 0.4;
+    g.y += grainSize * 0.3; // fall speed
 
     if (g.y >= g.targetY) {
       stackHeight[g.x]++;
@@ -175,12 +194,13 @@ function animateSandClock() {
   // Draw falling grains
   for (const g of fallingGrains) {
     sandCtx.beginPath();
-    sandCtx.arc(g.x * grainSize + grainSize / 2, g.y + grainSize / 2, grainSize / 2, 0, Math.PI * 2);
+    sandCtx.arc(g.x * grainSize + grainSize/2, g.y + grainSize/2, grainSize/2, 0, Math.PI*2);
     sandCtx.fill();
   }
 
   requestAnimationFrame(animateSandClock);
 }
+
 
 
 

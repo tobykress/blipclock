@@ -170,8 +170,8 @@ body {
 /* Larger binary clock on mobile devices */
 @media screen and (max-width: 600px) {
   .binary-grid {
-    --dot: 48px;
-    --gap: 28px;
+    --dot: 38px;
+    --gap: 22px;
     padding: var(--gap);
   }
 }

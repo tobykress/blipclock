@@ -182,18 +182,19 @@ body {
   width: var(--dot);
   height: var(--dot);
   border-radius: 50%;
-  background: transparent;
-  border: 2px solid #555;            /* darker so it's visible on white */
-  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.03);
+  background: white;               /* Always white when "off" */
+  border: 2px solid #000;          /* Always black border */
+  box-shadow: none;
   transition: background-color .18s ease, border-color .18s ease, transform .12s ease;
 }
+
 .bit.on { transform: translateY(-1px); }
 
-#rowDb .bit.on { background:#000;    border-color:#000; }
-#rowB  .bit.on { background:#f39c12; border-color:#f39c12; }
-#rowCb .bit.on { background:#e74c3c; border-color:#e74c3c; }
-#rowMb .bit.on { background:#8e44ad; border-color:#8e44ad; }
-#rowUb .bit.on { background:#0074D9; border-color:#0074D9; }
+#rowDb .bit.on { background: #000;    border: 2px solid #000; }
+#rowB  .bit.on { background: #f39c12; border: 2px solid #000; }
+#rowCb .bit.on { background: #e74c3c; border: 2px solid #000; }
+#rowMb .bit.on { background: #8e44ad; border: 2px solid #000; }
+#rowUb .bit.on { background: #0074D9; border: 2px solid #000; }
 
 .about-inner ul {
   padding-left: 1.5rem;

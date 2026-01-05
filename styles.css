@@ -117,7 +117,6 @@ body {
 #clock-analog .center-dot    { position: absolute; z-index: 3; }
 
 /* Place digits around the circle (10 divisions = 36° each) */
-/* Place digits around the circle (10 divisions = 36° each) */
 #clock-analog .analog-numbers .number {
   position: absolute;
   left: 50%;
@@ -155,6 +154,10 @@ body {
   align-items: center;
 }
 
+#clock-sand {
+  padding-bottom: 60px; /* Prevent nav button overlap */
+  box-sizing: border-box;
+}
 
 /* Responsive sizing */
 .binary-grid {
